@@ -1,3 +1,4 @@
+#!groovy
 def repo = "dbutil"
 def dockerUser = "discoenv"
 
