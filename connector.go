@@ -46,7 +46,7 @@ func (c Connector) ping(endTime time.Time, db *sql.DB) error {
 	delay := time.Duration(0)
 
 	// Try to ping the database until we succeed or time out.
-	err := error(nil)
+	var err error
 	for {
 
 		// Sleep for the current delay before trying to ping the database.
