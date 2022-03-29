@@ -4,6 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	"time"
+
+	"github.com/uptrace/opentelemetry-go-extra/otelsql"
+	semconv "go.opentelemetry.io/otel/semconv/v1.7.0"
 )
 
 // Connector is used to establish and verify database connections within a set timeout period.
@@ -30,7 +33,9 @@ func (c Connector) connect(endTime time.Time, driverName, uri string) (*sql.DB, 
 		time.Sleep(delay)
 
 		// Attempt to establish the database connection.
-		db, err := sql.Open(driverName, uri)
+		db, err := otelsql.Open(driverName, uri,
+			otelsql.WithAttributes(semconv.DBSystemPostgreSQL),
+		)
 		if err == nil {
 			return db, nil
 		}
