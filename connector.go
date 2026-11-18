@@ -86,7 +86,7 @@ func (c Connector) Connect(driverName, uri string) (*sql.DB, error) {
 
 	// Attempt to ping the database.
 	if err := c.ping(endTime, db); err != nil {
-		db.Close()
+		_ = db.Close() // the ping error is the one worth returning
 		return nil, err
 	}
 	return db, nil
